@@ -45,6 +45,29 @@ func GetWorker(c *Connection, id string) (*Worker, error) {
 	return &worker, nil
 }
 
+// GetWorker returns a worker from the db
+func GetAllWorkers(c *Connection) (*Worker, error) {
+	//logFields := logrus.Fields{"id": id}
+	workerLog.WithFields(logFields).Info("Fetching workers")
+	res, err := c.workersTable.Run(c.s)
+	defer res.Close()
+	if err != nil {
+		workerLog.WithFields(logFields).WithField("err", err).Error("Error fetching workers")
+		return nil, err
+	}
+	if res.IsNil() {
+		workerLog.WithFields(logFields).Debug("Workers not found")
+		return nil, nil
+	}
+	var workers []Worker
+	err = res.All(&workers)
+	if err != nil {
+		workerLog.WithFields(logFields).WithField("err", err).Error("Error loading workers")
+		return nil, err
+	}
+	return &workers, nil
+}
+
 // Store inserts the worker into the db
 func (worker *Worker) Store(c *Connection) error {
 	workerLog.Info("Storing worker")

@@ -54,6 +54,27 @@ func (api *apiHandler) workersIndexHandler(res http.ResponseWriter, req *http.Re
 	api.renderWorker(res, worker)
 }
 
+func (api *apiHandler) workersGetAllHandler(res http.ResponseWriter, req *http.Request) {
+
+	// vars := mux.Vars(req)
+	workers, err := db.GetAllWorkers(api.dbConnection)
+
+	if err != nil {
+		renderError(res, err, 500)
+		return
+	}
+
+	if workers == nil {
+		renderError(res, errors.New("Workers not found"), 404)
+		return
+	}
+
+	res.WriteHeader(200)
+	for _, worker := range workers {
+        api.renderWorker(res, worker)
+  }
+}
+
 func (api *apiHandler) renderWorker(res http.ResponseWriter, worker *db.Worker) {
 	res.Header().Set("Content-Type", "application/json")
 	encoder := json.NewEncoder(res)
