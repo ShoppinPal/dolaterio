@@ -46,7 +46,7 @@ func GetWorker(c *Connection, id string) (*Worker, error) {
 }
 
 // GetWorker returns a worker from the db
-func GetAllWorkers(c *Connection) (*Worker, error) {
+func GetAllWorkers(c *Connection) (*[]Worker, error) {
 	//logFields := logrus.Fields{"id": id}
 	workerLog.WithFields(logFields).Info("Fetching workers")
 	res, err := c.workersTable.Run(c.s)
