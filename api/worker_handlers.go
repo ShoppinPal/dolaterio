@@ -71,7 +71,7 @@ func (api *apiHandler) workersGetAllHandler(res http.ResponseWriter, req *http.R
 
 	res.WriteHeader(200)
 	for _, worker := range workers {
-        api.renderWorker(res, worker)
+        api.renderWorker(res, &worker)
   }
 }
 
