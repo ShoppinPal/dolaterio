@@ -1,10 +1,10 @@
 package main
 
 import (
-	"github.com/dolaterio/dolaterio/db"
-	"github.com/dolaterio/dolaterio/docker"
-	"github.com/dolaterio/dolaterio/queue"
-	"github.com/dolaterio/dolaterio/runner"
+	"github.com/shoppinpal/dolaterio/db"
+	"github.com/shoppinpal/dolaterio/docker"
+	"github.com/shoppinpal/dolaterio/queue"
+	"github.com/shoppinpal/dolaterio/runner"
 )
 
 func main() {

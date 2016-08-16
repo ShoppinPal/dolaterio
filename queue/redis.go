@@ -6,7 +6,7 @@ import (
 	"gopkg.in/redis.v2"
 
 	"github.com/Sirupsen/logrus"
-	"github.com/dolaterio/dolaterio/core"
+	"github.com/shoppinpal/dolaterio/core"
 )
 
 type redisQueue struct {

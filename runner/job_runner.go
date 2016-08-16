@@ -3,9 +3,9 @@ package runner
 import (
 	"errors"
 
-	"github.com/dolaterio/dolaterio/db"
-	"github.com/dolaterio/dolaterio/docker"
-	"github.com/dolaterio/dolaterio/queue"
+	"github.com/shoppinpal/dolaterio/db"
+	"github.com/shoppinpal/dolaterio/docker"
+	"github.com/shoppinpal/dolaterio/queue"
 )
 
 // JobRunner models a job runner

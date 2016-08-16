@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"testing"
 
-	"github.com/dolaterio/dolaterio/db"
+	"github.com/shoppinpal/dolaterio/db"
 	"github.com/stretchr/testify/assert"
 )
 

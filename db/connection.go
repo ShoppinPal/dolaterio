@@ -4,7 +4,7 @@ import (
 	"fmt"
 
 	"github.com/dancannon/gorethink"
-	"github.com/dolaterio/dolaterio/core"
+	"github.com/shoppinpal/dolaterio/core"
 )
 
 // Connection represents a connection to the database

@@ -5,8 +5,8 @@ import (
 	"time"
 
 	"github.com/Sirupsen/logrus"
-	"github.com/dolaterio/dolaterio/core"
-	"github.com/dolaterio/dolaterio/db"
+	"github.com/shoppinpal/dolaterio/core"
+	"github.com/shoppinpal/dolaterio/db"
 	"github.com/fsouza/go-dockerclient"
 )
 

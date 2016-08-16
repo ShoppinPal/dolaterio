@@ -1,6 +1,6 @@
 package runner
 
-import "github.com/dolaterio/dolaterio/queue"
+import "github.com/shoppinpal/dolaterio/queue"
 
 type fakeQueue struct {
 	ids chan string

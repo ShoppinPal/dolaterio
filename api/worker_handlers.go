@@ -6,7 +6,7 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/dolaterio/dolaterio/db"
+	"github.com/shoppinpal/dolaterio/db"
 	"github.com/gorilla/mux"
 )
 

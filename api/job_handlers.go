@@ -5,8 +5,8 @@ import (
 	"errors"
 	"net/http"
 
-	"github.com/dolaterio/dolaterio/db"
-	"github.com/dolaterio/dolaterio/queue"
+	"github.com/shoppinpal/dolaterio/db"
+	"github.com/shoppinpal/dolaterio/queue"
 	"github.com/gorilla/mux"
 )
 

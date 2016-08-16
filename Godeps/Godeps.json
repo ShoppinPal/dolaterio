@@ -1,5 +1,5 @@
 {
-	"ImportPath": "github.com/dolaterio/dolaterio",
+	"ImportPath": "github.com/shoppinpal/dolaterio",
 	"GoVersion": "go1.6",
 	"GodepVersion": "v62",
 	"Packages": [

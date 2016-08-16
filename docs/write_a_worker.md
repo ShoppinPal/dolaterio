@@ -4,14 +4,14 @@ This document will guide you through the creation of a *dolater.io* worker.
 
 ##Code
 
-We have some [templates](https://github.com/dolaterio/templates) in different languages with the simplest structure for your worker.
+We have some [templates](https://github.com/shoppinpal/templates) in different languages with the simplest structure for your worker.
 
 You can also have a look at some of our internal workers as a reference:
-- [Simple image resizer](https://github.com/dolaterio/simple_image_resizer)
-- [Asciify](https://github.com/dolaterio/asciify)
-- [Parrot](https://github.com/dolaterio/parrot)
-- [Dummy worker](https://github.com/dolaterio/dummy_worker)
-- [Webhook caller](https://github.com/dolaterio/webhook_caller)
+- [Simple image resizer](https://github.com/shoppinpal/simple_image_resizer)
+- [Asciify](https://github.com/shoppinpal/asciify)
+- [Parrot](https://github.com/shoppinpal/parrot)
+- [Dummy worker](https://github.com/shoppinpal/dummy_worker)
+- [Webhook caller](https://github.com/shoppinpal/webhook_caller)
 
 ## Configuration via environment variables
 
@@ -23,7 +23,7 @@ Check the API documentation to see how environment variables are defined.
 
 All job input will be sent as STDIN stream. Make sure your worker uses it as your main data input.
 
-If you're not sure how to read from the standard input, check our [templates](https://github.com/dolaterio/templates) or drop us an [email](mailto:admin@dolater.io) if you're having trouble and we'll help you out.
+If you're not sure how to read from the standard input, check our [templates](https://github.com/shoppinpal/templates) or drop us an [email](mailto:admin@dolater.io) if you're having trouble and we'll help you out.
 
 ## Build a docker container with your worker
 
