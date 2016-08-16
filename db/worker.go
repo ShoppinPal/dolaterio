@@ -46,7 +46,7 @@ func GetWorker(c *Connection, id string) (*Worker, error) {
 }
 
 // GetWorker returns a worker from the db
-func GetAllWorkers(c *Connection) (*[]Worker, error) {
+func GetAllWorkers(c *Connection) ([]Worker, error) {
 	//logFields := logrus.Fields{"id": id}
 	workerLog.Info("Fetching workers")
 	res, err := c.workersTable.Run(c.s)
@@ -65,7 +65,7 @@ func GetAllWorkers(c *Connection) (*[]Worker, error) {
 		workerLog.WithField("err", err).Error("Error loading workers")
 		return nil, err
 	}
-	return &workers, nil
+	return workers, nil
 }
 
 // Store inserts the worker into the db
