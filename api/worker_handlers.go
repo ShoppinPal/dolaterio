@@ -70,8 +70,8 @@ func (api *apiHandler) workersGetAllHandler(res http.ResponseWriter, req *http.R
 	}
 
 	res.WriteHeader(200)
-	for _, worker := range workers {
-        api.renderWorker(res, worker)
+	for i := 0; i < len(workers); i++ {
+        api.renderWorker(res, workers[i])
   }
 }
 
