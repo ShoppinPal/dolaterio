@@ -31,7 +31,7 @@ func NewConnection() (*Connection, error) {
 	}
 	s.SetMaxOpenConns(5)
 
-	_, err = gorethink.Wait().Run(s)
+	//_, err = gorethink.Wait().Run(s)
 
 	if err != nil {
 		return nil, err
