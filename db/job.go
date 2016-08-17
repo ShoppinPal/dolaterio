@@ -58,6 +58,36 @@ func GetJob(c *Connection, id string) (*Job, error) {
 	return &job, nil
 }
 
+//Get All Jobs for the workers
+func GetAllJobs(c *Connection, workerid string) ([]Job, error) {
+	logFields := logrus.Fields{"id": workerid}
+	jobLog.WithFields(logFields).Info("Fetching jobs")
+
+	res, err := c.jobsTable.Filter(map[string]interface{}{"WorkerID": workerid}).Run(c.s)
+	defer res.Close()
+	if err != nil {
+		jobLog.WithFields(logFields).WithField("err", err).Error("Error fetching jobs")
+		return nil, err
+	}
+	if res.IsNil() {
+		jobLog.WithFields(logFields).Debug("Jobs not found")
+		return nil, nil
+	}
+	var jobs []Job
+	err = res.All(&jobs)
+	if err != nil {
+		jobLog.WithFields(logFields).WithField("err", err).Error("Error loading job")
+		return nil, err
+	}
+	// job.Worker, err = GetWorker(c, job.WorkerID)
+	// if err != nil {
+	// 	jobLog.WithFields(logFields).WithField("err", err).Error("Error getting job's worker")
+	// 	return nil, err
+	// }
+	jobLog.WithFields(logFields).WithField("job", jobs).Debug("Retrieved jobs")
+	return jobs, nil
+}
+
 // Store inserts the job into the db
 func (job *Job) Store(c *Connection) error {
 	jobLog.Info("Storing job")

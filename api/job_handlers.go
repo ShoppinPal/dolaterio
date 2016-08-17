@@ -54,6 +54,24 @@ func (api *apiHandler) jobsIndexHandler(res http.ResponseWriter, req *http.Reque
 	api.renderJob(res, job)
 }
 
+func (api *apiHandler) jobsGetAllHandler(res http.ResponseWriter, req *http.Request) {
+	vars := mux.Vars(req)
+	jobs, err := db.GetAllJobs(api.dbConnection, vars["workerid"])
+
+	if err != nil {
+		renderError(res, err, 500)
+		return
+	}
+	if jobs == nil {
+		renderError(res, errors.New("Job not found"), 404)
+		return
+	}
+	res.WriteHeader(200)
+	for _, job := range jobs {
+        api.renderWorker(res, &job)
+  }
+}
+
 func (api *apiHandler) renderJob(res http.ResponseWriter, job *db.Job) {
 	res.Header().Set("Content-Type", "application/json")
 	encoder := json.NewEncoder(res)
