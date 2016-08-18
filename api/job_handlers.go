@@ -68,7 +68,7 @@ func (api *apiHandler) jobsGetAllHandler(res http.ResponseWriter, req *http.Requ
 	}
 	res.WriteHeader(200)
 	for _, job := range jobs {
-        api.renderWorker(res, &job)
+        api.renderJob(res, &job)
   }
 }
 
