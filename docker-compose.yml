@@ -1,7 +1,7 @@
 version: '2'
 services:
    worker:
-      image: dolaterio/dolaterio
+      image: shoppinpal/dolaterio
       depends_on:
         - rethinkdb
         - redis
@@ -13,7 +13,7 @@ services:
       volumes:
         - /var/run/docker.sock:/var/run/docker.sock
    api:
-      image: dolaterio/dolaterio
+      image: shoppinpal/dolaterio
       depends_on:
         - rethinkdb
         - redis
@@ -26,7 +26,7 @@ services:
         RETHINKDB_PORT_28015_TCP_ADDR: rethinkdb
         REDIS_PORT_6379_TCP_ADDR: redis
    migrate:
-      image: dolaterio/dolaterio
+      image: shoppinpal/dolaterio
       environment:
         RETHINKDB_PORT_28015_TCP_ADDR: rethinkdb
       depends_on:
