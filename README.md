@@ -16,7 +16,14 @@ Now it's all ready to use.
 
 # Simple Example
 
-Since dolater.io is running in docker, you'll need to know your docker host IP address to access it. If you use boot2docker, run `boot2docker ip` to find out.
+Since dolater.io is running in docker, you'll need to know your docker host IP address to access it.
+* If you use boot2docker, run `boot2docker ip` to find and substitute the value for `DOCKERHOST`
+  * If that option is too outdated then another option for 'nix:
+
+    ```
+    export DOCKERHOST=`docker-machine ip default`
+    ```
+* If you use `Docker for Mac and Windows beta` then you can substitute `DOCKERHOST` with `localhost`.
 
 Create a worker using our parrot docker image:
 
