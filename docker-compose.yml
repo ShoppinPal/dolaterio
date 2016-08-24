@@ -36,4 +36,4 @@ services:
    redis:
       image: redis:2.8
    rethinkdb:
-      image: rethinkdb:2.0
+      image: rethinkdb:2.3.4
