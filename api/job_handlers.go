@@ -56,7 +56,7 @@ func (api *apiHandler) jobsIndexHandler(res http.ResponseWriter, req *http.Reque
 
 func (api *apiHandler) jobsGetAllHandler(res http.ResponseWriter, req *http.Request) {
 	vars := mux.Vars(req)
-	jobs, err := db.GetAllJobs(api.dbConnection, vars["workerid"])
+	jobs, err := db.GetAllJobs(api.dbConnection, vars["id"])
 
 	if err != nil {
 		renderError(res, err, 500)
@@ -68,11 +68,17 @@ func (api *apiHandler) jobsGetAllHandler(res http.ResponseWriter, req *http.Requ
 	}
 	res.WriteHeader(200)
 	for _, job := range jobs {
-        api.renderJob(res, &job)
+        api.renderAllJobs(res, &job)
   }
 }
 
 func (api *apiHandler) renderJob(res http.ResponseWriter, job *db.Job) {
+	res.Header().Set("Content-Type", "application/json")
+	encoder := json.NewEncoder(res)
+	encoder.Encode(job)
+}
+
+func (api *apiHandler) renderAllJobs(res http.ResponseWriter, job *interface{}) {
 	res.Header().Set("Content-Type", "application/json")
 	encoder := json.NewEncoder(res)
 	encoder.Encode(job)

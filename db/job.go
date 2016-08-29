@@ -1,6 +1,8 @@
 package db
 
 import "github.com/Sirupsen/logrus"
+import "fmt"
+import "reflect"
 
 // Job is the model struct for jobs
 type Job struct {
@@ -13,6 +15,10 @@ type Job struct {
 	Stdout   string            `gorethink:"stdout" json:"stdout"`
 	Stderr   string            `gorethink:"stderr" json:"stderr"`
 	Syserr   string            `gorethink:"syserr" json:"syserr"`
+}
+
+type Wrker struct {
+        WorkerID        string  `json:"worker_id"`
 }
 
 const (
@@ -59,11 +65,12 @@ func GetJob(c *Connection, id string) (*Job, error) {
 }
 
 //Get All Jobs for the workers
-func GetAllJobs(c *Connection, workerid string) ([]Job, error) {
-	logFields := logrus.Fields{"id": workerid}
+func GetAllJobs(c *Connection, id string) ([]interface{}, error) {
+	logFields := logrus.Fields{"id": id}
 	jobLog.WithFields(logFields).Info("Fetching jobs")
-
-	res, err := c.jobsTable.Filter(map[string]interface{}{"WorkerID": workerid}).Run(c.s)
+	f := Wrker{WorkerID: id}
+  g, err := ToMap(f, "json")
+  res, err := c.jobsTable.Filter(g).Run(c.s)
 	defer res.Close()
 	if err != nil {
 		jobLog.WithFields(logFields).WithField("err", err).Error("Error fetching jobs")
@@ -73,7 +80,7 @@ func GetAllJobs(c *Connection, workerid string) ([]Job, error) {
 		jobLog.WithFields(logFields).Debug("Jobs not found")
 		return nil, nil
 	}
-	var jobs []Job
+	var jobs []interface{}
 	err = res.All(&jobs)
 	if err != nil {
 		jobLog.WithFields(logFields).WithField("err", err).Error("Error loading job")
@@ -119,4 +126,28 @@ func (job *Job) Update(c *Connection) error {
 		return err
 	}
 	return nil
+}
+
+func ToMap(in interface{}, tag string) (map[string]interface{}, error) {
+        out := make(map[string]interface{})
+
+        v := reflect.ValueOf(in)
+        if v.Kind() == reflect.Ptr {
+                v = v.Elem()
+        }
+
+        // we only accept structs
+        if v.Kind() != reflect.Struct {
+                return nil, fmt.Errorf("ToMap only accepts structs; got %T", v)
+        }
+
+        typ := v.Type()
+        for i := 0; i < v.NumField(); i++ {
+                // gets us a StructField
+                fi := typ.Field(i)
+                if tagv := fi.Tag.Get(tag); tagv != "" {
+                        out[tagv] = v.Field(i).Interface()
+                }
+        }
+        return out, nil
 }
