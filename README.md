@@ -14,6 +14,10 @@ This will run the API server as well as one dolater.io worker. You can always sc
 
 Now it's all ready to use.
 
+# How to write Worker
+
+You can find documentation here for [writing your own worker.](https://github.com/ShoppinPal/dolaterio/blob/master/docs/write_a_worker.md)
+
 # Simple Example
 
 Since dolater.io is running in docker, you'll need to know your docker host IP address to access it.
@@ -41,4 +45,16 @@ It will return a new JSON containing, between others, the `id` of the job. You c
 
 ```
 curl http://DOCKERHOST:7000/v1/jobs/JOB_ID
+```
+
+Passing environment variables with worker :
+
+```
+curl http://DOCKERHOST:7000/v1/workers -H "Content-Type: application/json" -X POST -d '{"docker_image": "dolaterio/parrot", "env": {"NODE_ENV": "local"}}'
+```
+
+Passing environment variables with the job :
+
+```
+curl http://127.0.0.1:7000/v1/jobs -H "Content-Type: application/json" -X POST -d '{"worker_id": "6e1935fc-328b-40d7-9957-2f10654360f1", "stdin": "Hello World!", "env": {"HI": "BYE"}}'
 ```
