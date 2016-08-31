@@ -70,6 +70,10 @@ func GetAllJobs(c *Connection, id string) ([]interface{}, error) {
 	jobLog.WithFields(logFields).Info("Fetching jobs")
 	f := Wrker{WorkerID: id}
   g, err := ToMap(f, "json")
+	if err != nil {
+		jobLog.WithFields(logFields).WithField("err", err).Error("Error converting id ToMap")
+		return nil, err
+	}
   res, err := c.jobsTable.Filter(g).Run(c.s)
 	defer res.Close()
 	if err != nil {
