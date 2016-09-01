@@ -12,6 +12,7 @@ import (
 
 type workerObjectRequest struct {
 	DockerImage string            `json:"docker_image"`
+	WorkerName	string						`json:"worker_name"`
 	Timeout     int               `json:"timeout"`
 	Env         map[string]string `json:"env"`
 }
@@ -23,6 +24,7 @@ func (api *apiHandler) workersCreateHandler(res http.ResponseWriter, req *http.R
 
 	worker := &db.Worker{
 		DockerImage: workerReq.DockerImage,
+		WorkerName:	 workerReq.WorkerName,
 		Env:         workerReq.Env,
 		Timeout:     time.Duration(workerReq.Timeout) * time.Millisecond,
 	}
