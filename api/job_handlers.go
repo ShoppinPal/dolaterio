@@ -12,7 +12,7 @@ import (
 
 type jobObjectRequest struct {
 	WorkerID string            `json:"worker_id"`
-	Stdin    string            `json:"stdin"`
+	Stdin    json.RawMessage   `json:"stdin"`
 	Env      map[string]string `json:"env"`
 }
 
@@ -22,7 +22,7 @@ func (api *apiHandler) jobsCreateHandler(res http.ResponseWriter, req *http.Requ
 	decoder.Decode(&jobReq)
 
 	job := &db.Job{
-		Stdin:    jobReq.Stdin,
+		Stdin:    string(jobReq.Stdin),
 		WorkerID: jobReq.WorkerID,
 		Env:      jobReq.Env,
 	}
