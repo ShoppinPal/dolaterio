@@ -28,7 +28,7 @@ func main() {
 		panic(err)
 	}
 
-	err = createTable(s, "workers")
+	err = createTablewithPrimKey(s, "workers", "worker_name")
 	if err != nil {
 		panic(err)
 	}
@@ -67,6 +67,27 @@ func createTable(s *gorethink.Session, tableName string) error {
 	if !arrContainsString(tables, tableName) {
 		_, err = gorethink.DB(core.Config.RethinkDbDatabase).
 			TableCreate(tableName).RunWrite(s)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
+}
+
+func createTablewithPrimKey(s *gorethink.Session, tableName string, PrimKey string) error {
+	cur, err := gorethink.DB(core.Config.RethinkDbDatabase).
+		TableList().Run(s)
+	if err != nil {
+		return err
+	}
+	defer cur.Close()
+
+	var tables []string
+	cur.All(&tables)
+
+	if !arrContainsString(tables, tableName) {
+		_, err = gorethink.DB(core.Config.RethinkDbDatabase).
+			TableCreate(tableName, gorethink.TableCreateOpts{PrimaryKey: PrimKey}).RunWrite(s)
 		if err != nil {
 			return err
 		}

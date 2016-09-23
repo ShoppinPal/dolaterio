@@ -76,7 +76,7 @@ func (worker *Worker) Store(c *Connection) error {
 
 	res, err := c.workersTable.Insert(worker).RunWrite(c.s)
 	if err != nil {
-		workerLog.WithField("err", err).Error("Error storing the worker")
+		workerLog.WithField("err", err).Error("Error storing the worker. May be worker name is not unique.")
 		return err
 	}
 	if len(res.GeneratedKeys) < 1 {
