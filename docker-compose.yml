@@ -10,8 +10,10 @@ services:
       environment:
         RETHINKDB_PORT_28015_TCP_ADDR: rethinkdb
         REDIS_PORT_6379_TCP_ADDR: redis
+        DOCKER_CONFIG: /root/.docker
       volumes:
         - /var/run/docker.sock:/var/run/docker.sock
+        - /root/.docker/config.json:/root/.docker/config.json
    api:
       image: shoppinpal/dolaterio
       depends_on:

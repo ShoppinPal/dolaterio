@@ -8,7 +8,7 @@ import (
 
 // Worker is the model struct for workers
 type Worker struct {
-	ID          string            `gorethink:"id,omitempty" json:"id"`
+	//ID          string            `gorethink:"id,omitempty" json:"id"`
 	WorkerName  string            `gorethink:"worker_name,omitempty" json:"worker_name"`
 	DockerImage string            `gorethink:"docker_image" json:"docker_image"`
 	Cmd         []string          `gorethink:"cmd" json:"cmd"`
@@ -24,10 +24,10 @@ var (
 )
 
 // GetWorker returns a worker from the db
-func GetWorker(c *Connection, id string) (*Worker, error) {
-	logFields := logrus.Fields{"id": id}
+func GetWorker(c *Connection, worker_name string) (*Worker, error) {
+	logFields := logrus.Fields{"worker_name": worker_name}
 	workerLog.WithFields(logFields).Info("Fetching worker")
-	res, err := c.workersTable.Get(id).Run(c.s)
+	res, err := c.workersTable.Get(worker_name).Run(c.s)
 	defer res.Close()
 	if err != nil {
 		workerLog.WithFields(logFields).WithField("err", err).Error("Error fetching worker")

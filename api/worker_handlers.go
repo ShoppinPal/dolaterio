@@ -40,7 +40,7 @@ func (api *apiHandler) workersCreateHandler(res http.ResponseWriter, req *http.R
 
 func (api *apiHandler) workersIndexHandler(res http.ResponseWriter, req *http.Request) {
 	vars := mux.Vars(req)
-	worker, err := db.GetWorker(api.dbConnection, vars["id"])
+	worker, err := db.GetWorker(api.dbConnection, vars["worker_name"])
 
 	if err != nil {
 		renderError(res, err, 500)

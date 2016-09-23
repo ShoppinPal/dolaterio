@@ -6,7 +6,8 @@ import "reflect"
 
 // Job is the model struct for jobs
 type Job struct {
-	ID       string            `gorethink:"id,omitempty" json:"id"`
+	//ID       string            `gorethink:"id,omitempty" json:"id"`
+	WorkerName string					 `gorethink:"worker_name,omitempty" json:"worker_name"`
 	Worker   *Worker           `gorethink:"-" json:"-"`
 	WorkerID string            `gorethink:"worker_id" json:"worker_id"`
 	Status   string            `gorethink:"status" json:"status"`
@@ -18,7 +19,7 @@ type Job struct {
 }
 
 type Wrker struct {
-        WorkerID        string  `json:"worker_id"`
+				WorkerName 			string	`json:"worker_name"`
 }
 
 const (
@@ -55,7 +56,7 @@ func GetJob(c *Connection, id string) (*Job, error) {
 		jobLog.WithFields(logFields).WithField("err", err).Error("Error loading job")
 		return nil, err
 	}
-	job.Worker, err = GetWorker(c, job.WorkerID)
+	job.Worker, err = GetWorker(c, job.WorkerName)
 	if err != nil {
 		jobLog.WithFields(logFields).WithField("err", err).Error("Error getting job's worker")
 		return nil, err
@@ -65,10 +66,10 @@ func GetJob(c *Connection, id string) (*Job, error) {
 }
 
 //Get All Jobs for the workers
-func GetAllJobs(c *Connection, id string) ([]interface{}, error) {
-	logFields := logrus.Fields{"id": id}
+func GetAllJobs(c *Connection, worker_name string) ([]interface{}, error) {
+	logFields := logrus.Fields{"worker_name": worker_name}
 	jobLog.WithFields(logFields).Info("Fetching jobs")
-	f := Wrker{WorkerID: id}
+	f := Wrker{WorkerName: worker_name}
   g, err := ToMap(f, "json")
 	if err != nil {
 		jobLog.WithFields(logFields).WithField("err", err).Error("Error converting id ToMap")

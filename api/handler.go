@@ -27,7 +27,7 @@ func (api *apiHandler) rootHandler() http.Handler {
 	workers := v1.PathPrefix("/workers").Subrouter()
 	workers.Methods("POST").HandlerFunc(api.workersCreateHandler)
 	workers.Methods("GET").Path("/").HandlerFunc(api.workersGetAllHandler)
-	workers.Methods("GET").Path("/{id}").HandlerFunc(api.workersIndexHandler)
+	workers.Methods("GET").Path("/{worker_name}").HandlerFunc(api.workersIndexHandler)
 
 
 	return r
