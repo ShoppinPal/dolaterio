@@ -8,7 +8,7 @@ import (
 
 // Worker is the model struct for workers
 type Worker struct {
-	//ID          string            `gorethink:"id,omitempty" json:"id"`
+	ID          string            `gorethink:"id,omitempty" json:"id"`
 	WorkerName  string            `gorethink:"worker_name,omitempty" json:"worker_name"`
 	DockerImage string            `gorethink:"docker_image" json:"docker_image"`
 	Cmd         []string          `gorethink:"cmd" json:"cmd"`
