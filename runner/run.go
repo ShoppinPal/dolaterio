@@ -19,9 +19,9 @@ func Run(job *db.Job, engine *docker.Engine) error {
 	// 	return err
 	// }
 
-	if !valid {
-		return errors.New("Invalid docker image")
-	}
+	// if !valid {
+	// 	return errors.New("Invalid docker image")
+	// }
 
 	container, err := engine.BuildContainer(job)
 	if err != nil {
