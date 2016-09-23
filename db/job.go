@@ -6,7 +6,7 @@ import "reflect"
 
 // Job is the model struct for jobs
 type Job struct {
-	//ID       string            `gorethink:"id,omitempty" json:"id"`
+	ID       string            `gorethink:"id,omitempty" json:"id"`
 	WorkerName string					 `gorethink:"worker_name,omitempty" json:"worker_name"`
 	Worker   *Worker           `gorethink:"-" json:"-"`
 	WorkerID string            `gorethink:"worker_id" json:"worker_id"`
