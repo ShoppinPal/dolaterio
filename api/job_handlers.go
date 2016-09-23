@@ -56,7 +56,7 @@ func (api *apiHandler) jobsIndexHandler(res http.ResponseWriter, req *http.Reque
 
 func (api *apiHandler) jobsGetAllHandler(res http.ResponseWriter, req *http.Request) {
 	vars := mux.Vars(req)
-	jobs, err := db.GetAllJobs(api.dbConnection, vars["id"])
+	jobs, err := db.GetAllJobs(api.dbConnection, vars["worker_name"])
 
 	if err != nil {
 		renderError(res, err, 500)
