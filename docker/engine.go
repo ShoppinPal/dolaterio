@@ -65,9 +65,10 @@ func (engine *Engine) BuildContainer(job *db.Job) (*Container, error) {
 
 	if !engine.SkipPull {
 		log.WithFields(logFields).Info("Pulling docker image")
+		auths, _ := docker.NewAuthConfigurationsFromDockerCfg()
 		err = engine.client.PullImage(docker.PullImageOptions{
 			Repository: job.Worker.DockerImage,
-		}, docker.AuthConfiguration{})
+		}, auths.Configs["https://index.docker.io/v1/"])
 		if err != nil {
 			log.WithFields(logFields).WithField("err", err).
 				Error("Error fetching image")
