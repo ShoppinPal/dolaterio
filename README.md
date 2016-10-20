@@ -14,6 +14,41 @@ This will run the API server as well as one dolater.io worker. You can always sc
 
 Now it's all ready to use.
 
+
+## Troubleshooting
+
+* If you cannot see some of the newer features than the image maybe out of date.
+  * Stop the runnign instances: `docker-compose down`
+  * Run `docker rmi shoppinpal/dolaterio` to remove the outdated image
+  * When `docker-compose up -d --no-recreate` runs, it will be downloaded again.
+* Very rarely you may see an error:
+  * When the `migrate` container may have faced a problem during its execution.
+    ```
+    {"error":true,"code":500,"message":"gorethink: Database `dolaterio` does not exist. in:\nr.DB(\"dolaterio\").Table(\"workers\")"}
+
+    # or
+    Traceback (most recent call last):
+      File "<string>", line 1, in <module>
+    KeyError: 'id'
+  ```
+  * use `docker-compose ps` to check the status
+    * you have a problem when the exit status is non-zero:
+
+      ```
+              Name                       Command               State  
+      ----------------------------------------------------------------
+      dolaterio_migrate_1     /migrate                         Exit 2
+      ```
+      * In such a case retry with `docker-compose down && docker-compose up -d --force-recreate`
+      * and recheck the status with `docker-compose ps`
+    * you are good to go if you see:
+
+      ```
+              Name                       Command               State
+      ----------------------------------------------------------------
+      dolaterio_migrate_1     /migrate                         Exit 0
+      ```
+
 # How to write Worker
 
 You can find documentation here for [writing your own worker.](https://github.com/ShoppinPal/dolaterio/blob/master/docs/write_a_worker.md)
